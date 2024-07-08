@@ -17,6 +17,7 @@
       <br>
       <button type="submit">設定完了</button>
     </form>
+    <p id="error-message" class="error-message"></p>
   </div>
 
   <script src="system.js"></script>
@@ -29,12 +30,17 @@
       const password = document.getElementById('password').value;
       
       // ここでユーザー名とパスワードの処理を行う（例：保存、認証など）
-      // この部分に処理を追加して、続行するための処理を実装する
-      
-      alert(`ユーザー名 ${username} で設定が完了しました。`);
+      // この部分に実際の処理を追加する必要があります
 
-      // 例えば設定が完了したら、メインのアプリケーションにリダイレクトするなど
-      // window.location.href = 'index.html'; // メインページにリダイレクトする例
+      // ログインが成功した場合の処理を想定していますが、具体的な実装は必要です
+      if (username === 'user' && password === 'password') {
+        // ログイン成功時の処理（例えばセッション管理やリダイレクトなど）
+        alert(`ユーザー ${username} でログインしました。`);
+        window.location.href = 'index.html'; // ログイン後のメインページにリダイレクト
+      } else {
+        // ログイン失敗時の処理
+        document.getElementById('error-message').textContent = 'ユーザー名またはパスワードが間違っています。';
+      }
     });
   </script>
 </body>
