@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>初期設定 - ブラウザOSもどき</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="setup-container">
+    <h1>初期設定</h1>
+    <form id="setup-form">
+      <label for="username">ユーザー名：</label>
+      <input type="text" id="username" name="username" required>
+      <br>
+      <label for="password">パスワード：</label>
+      <input type="password" id="password" name="password" required>
+      <br>
+      <button type="submit">設定完了</button>
+    </form>
+  </div>
+
+  <script src="system.js"></script>
+  <script src="app.js"></script>
+  <script>
+    // フォームの送信を処理する関数
+    document.getElementById('setup-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      
+      // ここでユーザー名とパスワードの処理を行う（例：保存、認証など）
+      // この部分に処理を追加して、続行するための処理を実装する
+      
+      alert(`ユーザー名 ${username} で設定が完了しました。`);
+
+      // 例えば設定が完了したら、メインのアプリケーションにリダイレクトするなど
+      // window.location.href = 'index.html'; // メインページにリダイレクトする例
+    });
+  </script>
+</body>
+</html>
