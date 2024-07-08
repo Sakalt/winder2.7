@@ -58,3 +58,8 @@ body {
   flex-grow: 1;
   padding: 10px;
 }
+body {
+  background-image: url('kabegami.jpg'); /* 背景画像のURL */
+  background-size: cover; /* 画像を全体に表示 */
+  background-position: center; /* 画像の位置を中央に配置 */
+}
