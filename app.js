@@ -67,3 +67,14 @@ function loadUrl() {
   const url = document.getElementById('browser-url').value;
   document.getElementById('browser-frame').src = url;
 }
+// 設定ウィンドウを開く関数
+function openSettings() {
+  createWindow('設定', settingsContent());
+}
+
+function settingsContent() {
+  return `
+    <h2>設定</h2>
+    <p>ここに設定内容を記述します。</p>
+  `;
+}
