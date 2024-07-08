@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>ブラウザOSもどき</title>
+  <style>
+    /* スタイルの設定 */
+    body {
+      font-family: Arial, sans-serif;
+    }
+    #login-form {
+      display: none;
+    }
+    .window {
+      border: 1px solid #ccc;
+      width: 300px;
+      height: 200px;
+      position: absolute;
+    }
+    .title-bar {
+      background: #ddd;
+      padding: 5px;
+      cursor: move;
+    }
+    .title-bar button {
+      float: right;
+    }
+  </style>
+</head>
+<body>
+  <div id="login-form">
+    <h2>アカウント作成</h2>
+    <input type="text" id="username" placeholder="ユーザー名"><br>
+    <input type="password" id="password" placeholder="パスワード"><br>
+    <button onclick="createAccount()">作成</button>
+  </div>
+  
+  <div id="desktop">
+    <!-- デスクトップのウィンドウをここに追加 -->
+  </div>
+
+  <script>
+    // ローカルストレージを利用してアカウント情報を管理
+    function createAccount() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      localStorage.setItem('username', username);
+      localStorage.setItem('password', password);
+      document.getElementById('login-form').style.display = 'none';
+      document.getElementById('desktop').style.display = 'block';
+    }
+
+    // 初期設定：アカウントが存在しない場合にアカウント作成フォームを表示
+    window.onload = function() {
+      if (!localStorage.getItem('username') || !localStorage.getItem('password')) {
+        document.getElementById('login-form').style.display = 'block';
+      } else {
+        document.getElementById('desktop').style.display = 'block';
+      }
+    };
+  </script>
+</body>
+</html>
