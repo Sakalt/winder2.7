@@ -88,17 +88,3 @@ function openBrowser() {
   createWindow('ブラウザ', browserContent());
 }
 
-// 画像を含むコンテンツを返す関数
-function calculatorContent() {
-  return `
-    <h2>電卓</h2>
-    <p>ここに電卓の機能を実装します。</p>
-  `;
-}
-
-function browserContent() {
-  return `
-    <h2>ブラウザ</h2>
-    <p>ここにブラウザの機能を実装します。</p>
-  `;
-}
