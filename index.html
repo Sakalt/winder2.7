@@ -38,8 +38,31 @@
     <button onclick="openTaskManager()">タスクマネージャー</button>
     <button onclick="openBrowser()">ブラウザ</button>
     <button onclick="openSettings()">設定</button>
+    <button onclick="openCamera()">カメラ</button>
+    <button onclick="openPhotos()">フォト</button>
   </div>
+ <script>
+    // スタートメニューの表示/非表示を切り替える関数
+    function toggleStartMenu() {
+      const startMenu = document.getElementById('start-menu');
+      startMenu.style.display = startMenu.style.display === 'block' ? 'none' : 'block';
+    }
 
+    // 設定アプリを開く関数
+    function openSettings() {
+      alert('設定アプリを開きます。');
+    }
+
+    // カメラアプリを開く関数
+    function openCamera() {
+      createWindow('カメラ', cameraContent());
+    }
+
+    // フォトアプリを開く関数
+    function openPhotos() {
+      createWindow('フォト', photosContent());
+    }
+  </script>
   <script src="https://unpkg.com/browserfs"></script>
   <script src="system.js"></script>
   <script src="app.js"></script>
