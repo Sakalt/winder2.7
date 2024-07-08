@@ -7,7 +7,8 @@
 </head>
 <body>
   <div id="desktop">
-    <!-- デスクトップのウィンドウをここに追加 -->
+    <!-- デスクトップのアイコンやウィンドウをここに追加 -->
+    <img src="kabegami.png" alt="背景画像" id="background-image">
   </div>
 
   <div id="taskbar">
@@ -15,11 +16,37 @@
   </div>
 
   <div id="start-menu">
+    <button onclick="openSettings()">設定</button>
     <button onclick="openCalculator()">電卓</button>
     <button onclick="openTaskManager()">タスクマネージャー</button>
     <button onclick="openBrowser()">ブラウザ</button>
-    <button onclick="openSettings()">設定</button>
+    <button onclick="openFiler()">filer</button>
   </div>
+
+  <script src="system.js"></script>
+  <script src="app.js"></script>
+  <script>
+    // スタートメニューの表示/非表示を切り替える関数
+    function toggleStartMenu() {
+      const startMenu = document.getElementById('start-menu');
+      startMenu.style.display = startMenu.style.display === 'block' ? 'none' : 'block';
+    }
+
+    // 設定アプリを開く関数
+    function openSettings() {
+      // ここに設定アプリを開く処理を追加する
+      alert('設定アプリを開きます。');
+    }
+
+    // 背景画像をタッチした際の処理
+    const backgroundImage = document.getElementById('background-image');
+    backgroundImage.addEventListener('click', function() {
+      alert('画像をタッチしました。アプリを開く処理を追加してください。');
+      // ここに画像をタッチした際のアプリを開く処理を追加する
+    });
+  </script>
+</body>
+</html>
 
   <script src="https://unpkg.com/browserfs"></script>
   <script src="system.js"></script>
