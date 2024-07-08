@@ -32,15 +32,14 @@
       // ここでユーザー名とパスワードの処理を行う（例：保存、認証など）
       // この部分に実際の処理を追加する必要があります
 
-      // ログインが成功した場合の処理を想定していますが、具体的な実装は必要です
-      if (username === 'user' && password === 'password') {
-        // ログイン成功時の処理（例えばセッション管理やリダイレクトなど）
-        alert(`ユーザー ${username} でログインしました。`);
-        window.location.href = 'index.html'; // ログイン後のメインページにリダイレクト
-      } else {
-        // ログイン失敗時の処理
-        document.getElementById('error-message').textContent = 'ユーザー名またはパスワードが間違っています。';
-      }
+      // 例として、ローカルストレージに保存する仮の処理を記述
+      localStorage.setItem('username', username);
+      localStorage.setItem('password', password);
+
+      alert(`ユーザー ${username} で設定が完了しました。`);
+
+      // 設定が完了したら、メインのアプリケーションにリダイレクトするなど
+      window.location.href = 'index.html'; // メインページにリダイレクトする例
     });
   </script>
 </body>
