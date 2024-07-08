@@ -78,3 +78,27 @@ function settingsContent() {
     <p>ここに設定内容を記述します。</p>
   `;
 }
+// 電卓を開く関数
+function openCalculator() {
+  createWindow('電卓', calculatorContent());
+}
+
+// ブラウザを開く関数
+function openBrowser() {
+  createWindow('ブラウザ', browserContent());
+}
+
+// 画像を含むコンテンツを返す関数
+function calculatorContent() {
+  return `
+    <h2>電卓</h2>
+    <p>ここに電卓の機能を実装します。</p>
+  `;
+}
+
+function browserContent() {
+  return `
+    <h2>ブラウザ</h2>
+    <p>ここにブラウザの機能を実装します。</p>
+  `;
+}
