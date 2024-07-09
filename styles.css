@@ -17,7 +17,7 @@ body {
   color: white;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding: 0 10px;
 }
 #start-button {
@@ -38,8 +38,8 @@ body {
 }
 .window {
   border: 1px solid #ccc;
-  width: 600px;
-  height: 400px;
+  width: 400px;
+  height: auto;
   position: absolute;
   background-color: white;
   display: flex;
