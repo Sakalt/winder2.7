@@ -1,43 +1,3 @@
-document.addEventListener('DOMContentLoaded', function() {
-  // キャンバス要素とコンテキストを取得
-  const canvas = document.getElementById('paint-canvas');
-  const ctx = canvas.getContext('2d');
-  let isPainting = false;
-  let currentColor = '#000000'; // 初期色
-
-  // キャンバスにマウスイベントを設定
-  canvas.addEventListener('mousedown', startPaint);
-  canvas.addEventListener('mousemove', draw);
-  canvas.addEventListener('mouseup', endPaint);
-  canvas.addEventListener('mouseleave', endPaint);
-
-  // 描画を開始する関数
-  function startPaint(e) {
-    isPainting = true;
-    draw(e);
-  }
-
-  // 描画する関数
-  function draw(e) {
-    if (!isPainting) return;
-
-    ctx.lineWidth = 5;
-    ctx.lineCap = 'round';
-    ctx.strokeStyle = currentColor;
-
-    ctx.lineTo(e.offsetX, e.offsetY);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(e.offsetX, e.offsetY);
-  }
-
-  // 描画を終了する関数
-  function endPaint() {
-    isPainting = false;
-    ctx.beginPath();
-  }
-});
-
 // ウィンドウを作成する関数
 function createWindow(title, content) {
   const newWindow = document.createElement('div');
@@ -46,9 +6,6 @@ function createWindow(title, content) {
     <div class="title-bar">
       ${title}
       <div>
-        <button onclick="minimizeWindow(this)">−</button>
-        <button onclick="maximizeWindow(this)">□</button>
-        <button onclick="closeWindow(this)">×</button>
         <button class="window-button minimize-button" onclick="minimizeWindow(this)">−</button>
         <button class="window-button maximize-button" onclick="maximizeWindow(this)">□</button>
         <button class="window-button close-button" onclick="closeWindow(this)">×</button>
@@ -70,7 +27,6 @@ function makeDraggable(element) {
     offsetX = e.clientX - element.offsetLeft;
     offsetY = e.clientY - element.offsetTop;
 
-    // ドラッグ中に他の要素がマウス操作を奪わないようにするために、イベントをキャプチャリングモードで処理します。
     e.stopPropagation();
     e.preventDefault();
   });
@@ -105,7 +61,7 @@ function maximizeWindow(button) {
   window.style.height = '100%';
 }
 
-// 電卓を開く関数
+// 電卓アプリを開く関数
 function openCalculator() {
   createWindow('電卓', calculatorContent());
 }
@@ -147,7 +103,7 @@ function inputCalc(value) {
   }
 }
 
-// タスクマネージャーを開く関数
+// タスクマネージャーアプリを開く関数
 function openTaskManager() {
   createWindow('タスクマネージャー', taskManagerContent());
 }
@@ -156,7 +112,7 @@ function taskManagerContent() {
   return '<div id="task-list">タスク一覧をここに表示</div>';
 }
 
-// ブラウザを開く関数
+// ブラウザアプリを開く関数
 function openBrowser() {
   createWindow('ブラウザ', browserContent());
 }
@@ -174,7 +130,7 @@ function loadUrl() {
   document.getElementById('browser-frame').src = url;
 }
 
-// 設定を開く関数
+// 設定アプリを開く関数
 function openSettings() {
   createWindow('設定', settingsContent());
 }
@@ -247,7 +203,40 @@ function paintAppContent() {
 // キャンバスを取得
 const canvas = document.getElementById('paint-canvas');
 const ctx = canvas.getContext('2d');
+let isPainting = false;
 let currentColor = '#000000'; // 初期色
+
+// マウスイベントの設定
+canvas.addEventListener('mousedown', startPaint);
+canvas.addEventListener('mousemove', draw);
+canvas.addEventListener('mouseup', endPaint);
+canvas.addEventListener('mouseleave', endPaint);
+
+// 描画を開始する関数
+function startPaint(e) {
+  isPainting = true;
+  draw(e);
+}
+
+// 描画する関数
+function draw(e) {
+  if (!isPainting) return;
+
+  ctx.lineWidth = 5;
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = currentColor;
+
+  ctx.lineTo(e.offsetX, e.offsetY);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(e.offsetX, e.offsetY);
+}
+
+// 描画を終了する関数
+function endPaint() {
+  isPainting = false;
+  ctx.beginPath();
+}
 
 // キャンバスをクリアする関数
 function clearCanvas() {
@@ -256,26 +245,42 @@ function clearCanvas() {
 
 // キャンバスをエクスポートする関数
 function exportCanvas() {
-  const image = canvas.toDataURL('image/png');
-  const newWindow = window.open(image);
+  const dataUrl = canvas.toDataURL('image/png');
+  const link = document.createElement('a');
+  link.href = dataUrl;
+  link.download = 'painting.png';
+  link.click();
 }
 
-// 日本語でアラートを表示する関数
-function showAlert(message) {
-  alert(message);
+// 時計アプリを開く関数
+function openClockApp() {
+  createWindow('時計アプリ', clockAppContent());
+  startClock();
+}
+
+function clockAppContent() {
+  return `<div id="clock"></div>`;
+}
+
+// 時計を表示する関数
+function startClock() {
+  const clockElement = document.getElementById('clock');
+
+  function updateClock() {
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+    clockElement.textContent = `${hours}:${minutes}:${seconds}`;
+  }
+
+  updateClock();
+  setInterval(updateClock, 1000);
 }
 
 // 初期設定
-document.getElementById('desktop').innerHTML = `
-  <button onclick="openCalculator()">電卓</button>
-  <button onclick="openTaskManager()">タスクマネージャー</button>
-  <button onclick="openBrowser()">ブラウザ</button>
-  <button onclick="openSettings()">設定</button>
-  <button onclick="openWeatherApp()">天気アプリ</button>
-  <button onclick="openPaintApp()">ペイントアプリ</button>
-`;
-
-// ウィンドウを作成する関数を使用する場合の例
-// createWindow('電卓', calculatorContent()); // 例えば、電卓を開く場合
-
-// その他の関数はそのまま残します
+document.addEventListener('DOMContentLoaded', function() {
+  // 初期ウィンドウを開く
+  openClockApp();
+  openPaintApp();
+});
