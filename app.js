@@ -107,172 +107,6 @@ function createWindow(title, content) {
   makeDraggable(newWindow);
 }
 
-// カメラアプリのコンテンツを設定する関数
-function cameraContent() {
-  return `
-    <video id="camera" autoplay></video>
-    <button onclick="takePhoto()">写真を撮る</button>
-    <canvas id="canvas" style="display:none;"></canvas>
-  `;
-}
-
-// フォトアプリのコンテンツを設定する関数
-function photosContent() {
-  return `
-    <div id="photo-gallery"></div>
-  `;
-}
-
-// カメラから写真を撮る関数
-function takePhoto() {
-  const video = document.getElementById('camera');
-  const canvas = document.getElementById('canvas');
-  const context = canvas.getContext('2d');
-  canvas.width = video.videoWidth;
-  canvas.height = video.videoHeight;
-  context.drawImage(video, 0, 0, canvas.width, canvas.height);
-  const dataURL = canvas.toDataURL('image/png');
-  const img = document.createElement('img');
-  img.src = dataURL;
-  document.getElementById('photo-gallery').appendChild(img);
-}
-
-// カメラを起動する関数
-function startCamera() {
-  const video = document.getElementById('camera');
-  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-    navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
-      video.srcObject = stream;
-      video.play();
-    });
-  }
-}
-
-// ウィンドウを作成したらカメラを起動する
-document.getElementById('desktop').addEventListener('click', function(e) {
-  if (e.target.closest('.window .title-bar button') && e.target.innerText === '×') {
-    const windowTitle = e.target.closest('.window').querySelector('.title-bar').innerText.trim();
-    if (windowTitle === 'カメラ') {
-      const video = document.getElementById('camera');
-      const stream = video.srcObject;
-      const tracks = stream.getTracks();
-      tracks.forEach(function(track) {
-        track.stop();
-      });
-      video.srcObject = null;
-    }
-  }
-});
-
-// ウィンドウをドラッグ可能にする関数
-function makeDraggable(element) {
-  let isMouseDown = false;
-  let offsetX, offsetY;
-
-  element.querySelector('.title-bar').addEventListener('mousedown', function(e) {
-    isMouseDown = true;
-    offsetX = e.clientX - element.offsetLeft;
-    offsetY = e.clientY - element.offsetTop;
-  });
-
-  document.addEventListener('mousemove', function(e) {
-    if (isMouseDown) {
-      element.style.left = `${e.clientX - offsetX}px`;
-      element.style.top = `${e.clientY - offsetY}px`;
-    }
-  });
-
-  document.addEventListener('mouseup', function() {
-    isMouseDown = false;
-  });
-}
-
-function closeWindow(button) {
-  button.parentElement.parentElement.parentElement.remove();
-}
-
-function minimizeWindow(button) {
-  const window = button.parentElement.parentElement.parentElement;
-  window.style.display = 'none';
-}
-
-function maximizeWindow(button) {
-  const window = button.parentElement.parentElement.parentElement;
-  window.style.width = '100%';
-  window.style.height = '100%';
-}
-
-// ペイントアプリのコンテンツを設定する関数
-function paintAppContent() {
-  return `
-    <canvas id="paint-canvas" width="800" height="600"></canvas>
-    <div>
-      <button onclick="clearCanvas()">クリア</button>
-      <button onclick="exportCanvas()">エクスポート</button>
-    </div>
-  `;
-}
-
-// キャンバスを取得
-const canvas = document.getElementById('paint-canvas');
-const ctx = canvas.getContext('2d');
-let isPainting = false;
-
-// マウスイベントの設定
-canvas.addEventListener('mousedown', startPaint);
-canvas.addEventListener('mousemove', draw);
-canvas.addEventListener('mouseup', endPaint);
-canvas.addEventListener('mouseleave', endPaint);
-
-// 描画を開始する関数
-function startPaint(e) {
-  isPainting = true;
-  draw(e);
-}
-
-// 描画する関数
-function draw(e) {
-  if (!isPainting) return;
-
-  ctx.lineWidth = 5;
-  ctx.lineCap = 'round';
-  ctx.strokeStyle = '#000';
-
-  ctx.lineTo(e.offsetX, e.offsetY);
-  ctx.stroke();
-  ctx.beginPath();
-  ctx.moveTo(e.offsetX, e.offsetY);
-}
-
-// 描画を終了する関数
-function endPaint() {
-  isPainting = false;
-  ctx.beginPath();
-}
-
-// キャンバスをクリアする関数
-function clearCanvas() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-}
-
-// キャンバスをエクスポートする関数
-function exportCanvas() {
-  const dataUrl = canvas.toDataURL('image/png');
-  const link = document.createElement('a');
-  link.href = dataUrl;
-  link.download = 'painting.png';
-  link.click();
-}
-
-// ウィンドウを作成したらペイントアプリを開始する
-document.getElementById('desktop').addEventListener('click', function(e) {
-  if (e.target.closest('.window .title-bar button') && e.target.innerText === '×') {
-    const windowTitle = e.target.closest('.window').querySelector('.title-bar').innerText.trim();
-    if (windowTitle === 'ペイント') {
-      // ここでペイントアプリの初期化やリセットなどの処理を行うことができます
-    }
-  }
-});
 // ペイントアプリのコンテンツを設定する関数
 function paintAppContent() {
   return `
@@ -392,3 +226,99 @@ function maximizeWindow(button) {
   window.style.width = '100%';
   window.style.height = '100%';
 }
+
+// カメラアプリのコンテンツを設定する関数
+function cameraContent() {
+  return `
+    <video id="camera" autoplay></video>
+    <button onclick="takePhoto()">写真を撮る</button>
+    <canvas id="canvas" style="display:none;"></canvas>
+  `;
+}
+
+// フォトアプリのコンテンツを設定する関数
+function photosContent() {
+  return `
+    <div id="photo-gallery"></div>
+  `;
+}
+
+// カメラから写真を撮る関数
+function takePhoto() {
+  const video = document.getElementById('camera');
+  const canvas = document.getElementById('canvas');
+  const context = canvas.getContext('2d');
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+  context.drawImage(video, 0, 0, canvas.width, canvas.height);
+  const dataURL = canvas.toDataURL('image/png');
+  const img = document.createElement('img');
+  img.src = dataURL;
+  document.getElementById('photo-gallery').appendChild(img);
+}
+
+// カメラを起動する関数
+function startCamera() {
+  const video = document.getElementById('camera');
+  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+      video.srcObject = stream;
+      video.play();
+    });
+  }
+}
+
+// ウィンドウを作成したらカメラを起動する
+document.getElementById('desktop').addEventListener('click', function(e) {
+  if (e.target.closest('.window .title-bar button') && e.target.innerText === '×') {
+    const windowTitle = e.target.closest('.window').querySelector('.title-bar').innerText.trim();
+    if (windowTitle === 'カメラ') {
+      const video = document.getElementById('camera');
+      const stream = video.srcObject;
+      const tracks = stream.getTracks();
+      tracks.forEach(function(track) {
+        track.stop();
+      });
+      video.srcObject = null;
+    }
+  }
+});
+
+// ウィンドウをドラッグ可能にする関数
+function makeDraggable(element) {
+  let isMouseDown = false;
+  let offsetX, offsetY;
+
+  element.querySelector('.title-bar').addEventListener('mousedown', function(e) {
+    isMouseDown = true;
+    offsetX = e.clientX - element.offsetLeft;
+    offsetY = e.clientY - element.offsetTop;
+  });
+
+  document.addEventListener('mousemove', function(e) {
+    if (isMouseDown) {
+      element.style.left = `${e.clientX - offsetX}px`;
+      element.style.top = `${e.clientY - offsetY}px`;
+    }
+  });
+
+  document.addEventListener('mouseup', function() {
+    isMouseDown = false;
+  });
+}
+
+function closeWindow(button) {
+  button.parentElement.parentElement.parentElement.remove();
+}
+
+function minimizeWindow(button) {
+  const window = button.parentElement.parentElement.parentElement;
+  window.style.display = 'none';
+}
+
+function maximizeWindow(button) {
+  const window = button.parentElement.parentElement.parentElement;
+  window.style.width = '100%';
+  window.style.height = '100%';
+}
+
