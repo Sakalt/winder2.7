@@ -84,3 +84,57 @@ window-button {
 .close-button {
   background-color: #dd0000; /* 閉じるボタンの背景色 */
 }
+/* styles.css */
+
+/* スタートボタンのスタイル */
+#start-button {
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+/* スタートメニュー全体のスタイル */
+#start-menu {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background-color: #333;
+    padding: 8px;
+    border-top-right-radius: 8px;
+}
+
+/* スタートメニュー内アイテムのスタイル */
+#start-menu-items {
+    display: none;
+    position: absolute;
+    bottom: 40px; /* スタートボタンの高さに合わせて調整 */
+    left: 0;
+    background-color: #333;
+    padding: 8px;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* スタートメニューアイテムのボタンスタイル */
+#start-menu-items button {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    background-color: transparent;
+    border: none;
+    color: white;
+    text-align: left;
+    cursor: pointer;
+}
+
+/* スタートメニューアイテムのボタンにホバースタイルを適用 */
+#start-menu-items button:hover {
+    background-color: #555;
+}
+
+/* スタートメニューが表示されたときのスタイル */
+#start-menu-items.visible {
+    display: block;
+}
