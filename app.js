@@ -301,3 +301,48 @@ function startMenu() {
         startMenuElement.style.display = 'block';
     }
 }
+// app.js
+function startMenu() {
+    var startMenu = document.getElementById("start-menu");
+    if (startMenu.style.display === "none") {
+        startMenu.style.display = "block";
+    } else {
+        startMenu.style.display = "none";
+    }
+}
+
+function openClockApp() {
+    // Hide all other apps
+    hideAllApps();
+
+    // Display clock app
+    var clockApp = document.getElementById("clockApp");
+    clockApp.style.display = "block";
+
+    // Start the clock
+    updateClock();
+}
+
+function updateClock() {
+    var now = new Date();
+    var hours = formatTime(now.getHours());
+    var minutes = formatTime(now.getMinutes());
+    var seconds = formatTime(now.getSeconds());
+
+    document.getElementById("hours").textContent = hours;
+    document.getElementById("minutes").textContent = minutes;
+    document.getElementById("seconds").textContent = seconds;
+
+    setTimeout(updateClock, 1000); // Update every second
+}
+
+function formatTime(time) {
+    return (time < 10 ? "0" : "") + time;
+}
+
+function hideAllApps() {
+    var apps = document.querySelectorAll(".app-container");
+    apps.forEach(function(app) {
+        app.style.display = "none";
+    });
+}
