@@ -190,7 +190,6 @@ function openPaintApp() {
 function paintAppContent() {
   return `
     <canvas id="paint-canvas" width="800" height="600"></canvas>
-    <div>
       <input type="color" id="color-picker" value="#000000">
       <button onclick="clearCanvas()">クリア</button>
       <button onclick="exportCanvas()">エクスポート</button>
