@@ -2,9 +2,9 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>ブラウザOSペイントアプリ</title>
+  <title>winder2.7</title>
   <link rel="stylesheet" href="styles.css">
-   <style>
+  <style>
     body {
       background-color: #f0f0f0; /* 背景色を灰色に設定 */
       background-image: url('壁紙.png'); /* 背景画像の設定 */
@@ -14,24 +14,34 @@
       margin: 0; /* 余白をなくす */
       padding: 0; /* パディングをなくす */
     }
+    .icon {
+      cursor: pointer; /* アイコンをクリック可能にする */
+      text-align: center; /* アイコン内のテキストを中央揃えにする */
+      margin: 20px; /* アイコン間の間隔を設定 */
+    }
+    .icon img {
+      width: 80px; /* アイコン画像の幅を設定 */
+      height: 80px; /* アイコン画像の高さを設定 */
+      display: block; /* 画像をブロック要素として表示 */
+      margin: 0 auto; /* 画像を中央に配置 */
+    }
   </style>
 </head>
 <body>
   <div class="icon" onclick="openBrowser()">
-      <img src="windbrowser-icon.png" alt="ブラウザ">
-      <span>ブラウザ</span>
-    </div>
-    <div class="icon" onclick="openCalculator()">
-      <img src="calculator-icon.png" alt="電卓">
-      <span>電卓</span>
-    </div>
+    <img src="windbrowser-icon.png" alt="ブラウザ">
+    <span>ブラウザ</span>
+  </div>
+  <div class="icon" onclick="openCalculator()">
+    <img src="calculator-icon.png" alt="電卓">
+    <span>電卓</span>
   </div>
 
   <div id="taskbar">
     <button id="start-button" onclick="toggleStartMenu()">スタート</button>
   </div>
 
-  <div id="start-menu">
+  <div id="start-menu" style="display: none;">
     <button onclick="openCalculator()">電卓</button>
     <button onclick="openTaskManager()">タスクマネージャー</button>
     <button onclick="openBrowser()">ブラウザ</button>
@@ -76,7 +86,6 @@
       createWindow('セットアップ', setupAppContent());
     }
 
-    
     // 天気アプリを開く関数
     function openWeatherApp() {
       createWindow('天気', weatherAppContent());
