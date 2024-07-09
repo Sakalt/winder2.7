@@ -254,3 +254,42 @@ function notepadContent() {
         <textarea id="notepad-text" style="width: 100%; height: calc(100% - 40px);"></textarea>
     `;
 }
+const apiKey = 'YOUR_API_KEY'; // ここにあなたのAPIキーを入力してください
+
+function openWeatherApp() {
+    createWindow('天気', weatherAppContent());
+    getWeatherData();
+}
+
+function weatherAppContent() {
+    return `
+        <div id="weather-info">
+            <h2 id="weather-city"></h2>
+            <p id="weather-description"></p>
+            <p id="weather-temperature"></p>
+            <p id="weather-humidity"></p>
+        </div>
+    `;
+}
+
+function getWeatherData() {
+    const city = 'Tokyo'; // 取得したい都市の名前を設定
+    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
+
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            const cityElement = document.getElementById('weather-city');
+            const descElement = document.getElementById('weather-description');
+            const tempElement = document.getElementById('weather-temperature');
+            const humidityElement = document.getElementById('weather-humidity');
+
+            cityElement.textContent = data.name;
+            descElement.textContent = `天気: ${data.weather[0].description}`;
+            tempElement.textContent = `気温: ${data.main.temp} °C`;
+            humidityElement.textContent = `湿度: ${data.main.humidity} %`;
+        })
+        .catch(error => {
+            console.error('天気情報の取得に失敗しました。', error);
+        });
+}
