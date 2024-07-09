@@ -147,3 +147,110 @@ function toggleStartMenu() {
     const menu = document.getElementById('start-menu-items');
     menu.classList.toggle('hidden');
 }
+function openPaintApp() {
+    createWindow('ペイント', paintAppContent());
+}
+
+function paintAppContent() {
+    return `
+        <canvas id="paint-canvas" width="400" height="300"></canvas>
+        <br>
+        <button onclick="clearCanvas()">クリア</button>
+    `;
+}
+
+let isPainting = false;
+let lastX = 0;
+let lastY = 0;
+
+function startPainting(e) {
+    isPainting = true;
+    [lastX, lastY] = [e.offsetX, e.offsetY];
+}
+
+function paint(e) {
+    if (!isPainting) return;
+    const canvas = document.getElementById('paint-canvas');
+    const ctx = canvas.getContext('2d');
+
+    ctx.lineWidth = 5;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = '#000';
+
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(e.offsetX, e.offsetY);
+    ctx.stroke();
+
+    [lastX, lastY] = [e.offsetX, e.offsetY];
+}
+
+function clearCanvas() {
+    const canvas = document.getElementById('paint-canvas');
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    isPainting = false;
+}
+function openCamera() {
+    createWindow('カメラ', cameraAppContent());
+}
+
+function cameraAppContent() {
+    return `
+        <video id="camera-stream" width="400" height="300" autoplay></video>
+        <br>
+        <button onclick="takeSnapshot()">スナップショット</button>
+        <canvas id="camera-canvas" width="400" height="300" style="display: none;"></canvas>
+    `;
+}
+
+function takeSnapshot() {
+    const video = document.getElementById('camera-stream');
+    const canvas = document.getElementById('camera-canvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    const image = canvas.toDataURL('image/png');
+    window.open(image);
+}
+
+navigator.mediaDevices.getUserMedia({ video: true })
+    .then(function (stream) {
+        const video = document.getElementById('camera-stream');
+        video.srcObject = stream;
+    })
+    .catch(function (error) {
+        console.error('カメラの使用が許可されていません。', error);
+    });
+function openFileExplorer() {
+    createWindow('ファイルエクスプローラー', fileExplorerContent());
+}
+
+function fileExplorerContent() {
+    return `
+        <div id="file-explorer">
+            <ul id="file-list">
+                <li>ファイル1.txt</li>
+                <li>ファイル2.jpg</li>
+                <li>フォルダ1
+                    <ul>
+                        <li>サブファイル1.txt</li>
+                        <li>サブファイル2.jpg</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    `;
+}
+function openNotepad() {
+    createWindow('ノートパッド', notepadContent());
+}
+
+function notepadContent() {
+    return `
+        <textarea id="notepad-text" style="width: 100%; height: calc(100% - 40px);"></textarea>
+    `;
+}
