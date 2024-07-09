@@ -119,6 +119,29 @@ function paintAppContent() {
   `;
 }
 
+// 時計アプリのコンテンツを設定する関数
+function clockAppContent() {
+  return `<div id="clock"></div>`;
+}
+
+// タイマーアプリのコンテンツを設定する関数
+function timerAppContent() {
+  return `
+    <div>
+      <input type="number" id="timer-minutes" placeholder="分" min="0">
+      <input type="number" id="timer-seconds" placeholder="秒" min="0">
+      <button onclick="startTimer()">スタート</button>
+      <button onclick="resetTimer()">リセット</button>
+    </div>
+    <div id="timer-display">00:00</div>
+  `;
+}
+
+// セットアップアプリのコンテンツを設定する関数
+function setupAppContent() {
+  return `<div>セットアップ機能はここに表示されます。</div>`;
+}
+
 // キャンバスを取得
 const canvas = document.getElementById('paint-canvas');
 const ctx = canvas.getContext('2d');
@@ -179,15 +202,41 @@ function setupColorPicker() {
   });
 }
 
-// ウィンドウを作成したらペイントアプリを開始する
-document.getElementById('desktop').addEventListener('click', function(e) {
-  if (e.target.closest('.window .title-bar button') && e.target.innerText === '×') {
-    const windowTitle = e.target.closest('.window').querySelector('.title-bar').innerText.trim();
-    if (windowTitle === 'ペイント') {
-      // ここでペイントアプリの初期化やリセットなどの処理を行うことができます
+// 時計の表示を開始する関数
+function startClock() {
+  const clock = document.getElementById('clock');
+  setInterval(() => {
+    const now = new Date();
+    clock.innerText = now.toLocaleTimeString();
+  }, 1000);
+}
+
+// タイマーの開始関数
+function startTimer() {
+  const minutes = parseInt(document.getElementById('timer-minutes').value) || 0;
+  const seconds = parseInt(document.getElementById('timer-seconds').value) || 0;
+  let totalTime = minutes * 60 + seconds;
+  const timerDisplay = document.getElementById('timer-display');
+
+  const interval = setInterval(() => {
+    const min = Math.floor(totalTime / 60);
+    const sec = totalTime % 60;
+    timerDisplay.innerText = `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
+    totalTime--;
+
+    if (totalTime < 0) {
+      clearInterval(interval);
+      timerDisplay.innerText = '00:00';
     }
-  }
-});
+  }, 1000);
+}
+
+// タイマーのリセット関数
+function resetTimer() {
+  document.getElementById('timer-display').innerText = '00:00';
+  document.getElementById('timer-minutes').value = '';
+  document.getElementById('timer-seconds').value = '';
+}
 
 // ウィンドウをドラッグ可能にする関数
 function makeDraggable(element) {
@@ -226,99 +275,3 @@ function maximizeWindow(button) {
   window.style.width = '100%';
   window.style.height = '100%';
 }
-
-// カメラアプリのコンテンツを設定する関数
-function cameraContent() {
-  return `
-    <video id="camera" autoplay></video>
-    <button onclick="takePhoto()">写真を撮る</button>
-    <canvas id="canvas" style="display:none;"></canvas>
-  `;
-}
-
-// フォトアプリのコンテンツを設定する関数
-function photosContent() {
-  return `
-    <div id="photo-gallery"></div>
-  `;
-}
-
-// カメラから写真を撮る関数
-function takePhoto() {
-  const video = document.getElementById('camera');
-  const canvas = document.getElementById('canvas');
-  const context = canvas.getContext('2d');
-  canvas.width = video.videoWidth;
-  canvas.height = video.videoHeight;
-  context.drawImage(video, 0, 0, canvas.width, canvas.height);
-  const dataURL = canvas.toDataURL('image/png');
-  const img = document.createElement('img');
-  img.src = dataURL;
-  document.getElementById('photo-gallery').appendChild(img);
-}
-
-// カメラを起動する関数
-function startCamera() {
-  const video = document.getElementById('camera');
-  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-    navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
-      video.srcObject = stream;
-      video.play();
-    });
-  }
-}
-
-// ウィンドウを作成したらカメラを起動する
-document.getElementById('desktop').addEventListener('click', function(e) {
-  if (e.target.closest('.window .title-bar button') && e.target.innerText === '×') {
-    const windowTitle = e.target.closest('.window').querySelector('.title-bar').innerText.trim();
-    if (windowTitle === 'カメラ') {
-      const video = document.getElementById('camera');
-      const stream = video.srcObject;
-      const tracks = stream.getTracks();
-      tracks.forEach(function(track) {
-        track.stop();
-      });
-      video.srcObject = null;
-    }
-  }
-});
-
-// ウィンドウをドラッグ可能にする関数
-function makeDraggable(element) {
-  let isMouseDown = false;
-  let offsetX, offsetY;
-
-  element.querySelector('.title-bar').addEventListener('mousedown', function(e) {
-    isMouseDown = true;
-    offsetX = e.clientX - element.offsetLeft;
-    offsetY = e.clientY - element.offsetTop;
-  });
-
-  document.addEventListener('mousemove', function(e) {
-    if (isMouseDown) {
-      element.style.left = `${e.clientX - offsetX}px`;
-      element.style.top = `${e.clientY - offsetY}px`;
-    }
-  });
-
-  document.addEventListener('mouseup', function() {
-    isMouseDown = false;
-  });
-}
-
-function closeWindow(button) {
-  button.parentElement.parentElement.parentElement.remove();
-}
-
-function minimizeWindow(button) {
-  const window = button.parentElement.parentElement.parentElement;
-  window.style.display = 'none';
-}
-
-function maximizeWindow(button) {
-  const window = button.parentElement.parentElement.parentElement;
-  window.style.width = '100%';
-  window.style.height = '100%';
-}
-
