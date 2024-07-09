@@ -204,17 +204,46 @@ function paintAppContent() {
   `;
 }
 
-// キャンバスを取得
-const canvas = document.getElementById('paint-canvas');
-const ctx = canvas.getContext('2d');
-let isPainting = false;
-let currentColor = '#000000'; // 初期色
+document.addEventListener('DOMContentLoaded', function() {
+  const canvas = document.getElementById('paint-canvas');
+  const ctx = canvas.getContext('2d');
+  let isPainting = false;
+  let currentColor = '#000000'; // 初期色
 
-// マウスイベントの設定
-canvas.addEventListener('mousedown', startPaint);
-canvas.addEventListener('mousemove', draw);
-canvas.addEventListener('mouseup', endPaint);
-canvas.addEventListener('mouseleave', endPaint);
+  // キャンバスを取得
+  canvas.addEventListener('mousedown', startPaint);
+  canvas.addEventListener('mousemove', draw);
+  canvas.addEventListener('mouseup', endPaint);
+  canvas.addEventListener('mouseleave', endPaint);
+
+  // 描画を開始する関数
+  function startPaint(e) {
+    isPainting = true;
+    draw(e);
+  }
+
+  // 描画する関数
+  function draw(e) {
+    if (!isPainting) return;
+
+    ctx.lineWidth = 5;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = currentColor;
+
+    ctx.lineTo(e.offsetX, e.offsetY);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(e.offsetX, e.offsetY);
+  }
+
+  // 描画を終了する関数
+  function endPaint() {
+    isPainting = false;
+    ctx.beginPath();
+  }
+});
+
+// その他の関数はそのまま残します
 
 // 描画を開始する関数
 function startPaint(e) {
