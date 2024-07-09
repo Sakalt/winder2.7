@@ -7,22 +7,25 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="start-menu">
-        <button id="start-button" onclick="toggleStartMenu()">スタート</button>
-        <div id="start-menu-items" class="hidden">
-            <button onclick="openBrowser()">ブラウザ</button>
-            <button onclick="openCalculator()">電卓</button>
-            <button onclick="openWeatherApp()">天気アプリ</button>
-            <button onclick="openTimerApp()">notepadアプリ</button>
-            <button onclick="PaintApp()">ペイントアプリ</button>
-            <button onclick="openClockApp()">時計アプリ</button>
-            <button onclick="openTaskManager()">タスクマネージャー</button>
-            <button onclick="openSettings()">設定</button>
-            <button onclick="openCamera()">camera</button>
-            <button onclick="openFileExplorer()">ファイルエクスプローラー</button>
-        </div>
-    </div>
+    <!-- スタートメニューのボタン -->
+<button onclick="startMenu()">Start</button>
 
+<!-- スタートメニュー本体 -->
+<div id="start-menu" style="display: none;">
+    <ul>
+        　<button onclick="openBrowser()">ブラウザ</button>
+        　<button onclick="openCalculator()">電卓</button>
+          <button onclick="openWeatherApp()">天気アプリ</button>
+          <button onclick="openTimerApp()">notepadアプリ</button>
+          <button onclick="PaintApp()">ペイントアプリ</button>
+          <button onclick="openClockApp()">時計アプリ</button>
+          <button onclick="openTaskManager()">タスクマネージャー</button>
+          <button onclick="openSettings()">設定</button>
+          <button onclick="openCamera()">camera</button>
+          <button onclick="openFileExplorer()">ファイルエクスプローラー</button>
+        <!-- 他のアプリケーションをここに追加 -->
+    </ul>
+</div>
     <script src="app.js"></script>
 </body>
 </html>
