@@ -10,25 +10,26 @@
   <div id="desktop">
     <!-- ここにウィンドウが追加されます -->
   </div>
-
-  <!-- スタートメニュー -->
-  <div id="start-menu">
-    <button onclick="toggleStartMenu()">スタート</button>
-    <div id="start-menu-content">
-      <button onclick="openWindBrowser()">WindBrowser</button>
-      <button onclick="openCalculator()">Calculator</button>
-      <button onclick="openPhotos()">写真</button>
-      <button onclick="openPhotoApp()">フォト</button>
-      <button onclick="openTaskManager()">タスクマネージャー</button>
-      <button onclick="openSettings()">設定</button>
-      <button onclick="openWeatherApp()">天気アプリ</button>
-      <button onclick="openPaintApp()">ペイントアプリ</button>
-      <button onclick="openClockApp()">時計アプリ</button>
-      <button onclick="openTimerApp()">タイマーアプリ</button>
-      <button onclick="openSetupApp()">セットアップアプリ</button>
+ <!-- Start Menu -->
+<div id="start-menu">
+    <div class="start-menu-header">
+        <button id="start-button" onclick="toggleStartMenu()">スタート</button>
+        <button id="close-button" onclick="closeStartMenu()">×</button>
     </div>
+    <div id="start-menu-items">
+        <!-- Start Menu Items -->
+        <button onclick="openBrowser()">ブラウザ</button>
+        <button onclick="openCalculator()">電卓</button>
+        <button onclick="openWeatherApp()">天気アプリ</button>
+        <button onclick="openTimerApp()">タイマーアプリ</button>
+        <button onclick="openPaintApp()">ペイントアプリ</button>
+        <button onclick="openClockApp()">時計アプリ</button>
+        <button onclick="openTaskManager()">タスクマネージャー</button>
+        <button onclick="openSettings()">設定</button>
+        <button onclick="openPhotos()">写真</button>
+    </div>
+</div>
   </div>
-
   <script src="system.js"></script>
   <script src="app.js"></script>
 </body>
