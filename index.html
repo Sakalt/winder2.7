@@ -2,8 +2,9 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>ブラウザOSもどき</title>
-  <style>
+  <title>ブラウザOSペイントアプリ</title>
+  <link rel="stylesheet" href="styles.css">
+   <style>
     body {
       background-color: #f0f0f0; /* 背景色を灰色に設定 */
       background-image: url('壁紙.png'); /* 背景画像の設定 */
@@ -14,12 +15,9 @@
       padding: 0; /* パディングをなくす */
     }
   </style>
-  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="desktop">
-    <!-- デスクトップのアイコンを追加 -->
-    <div class="icon" onclick="openBrowser()">
+  <div class="icon" onclick="openBrowser()">
       <img src="windbrowser-icon.png" alt="ブラウザ">
       <span>ブラウザ</span>
     </div>
@@ -41,37 +39,42 @@
     <button onclick="openCamera()">カメラ</button>
     <button onclick="openPhotos()">フォト</button>
     <button onclick="openPaintApp()">ペイント</button>
+    <button onclick="openClockApp()">時計</button>
+    <button onclick="openTimerApp()">タイマー</button>
+    <button onclick="openSetupApp()">セットアップ</button>
+    <!-- 他のアプリケーションのボタンを追加 -->
   </div>
- <script>
+
+  <script src="system.js"></script>
+  <script src="app.js"></script>
+  <script>
     // スタートメニューの表示/非表示を切り替える関数
     function toggleStartMenu() {
       const startMenu = document.getElementById('start-menu');
       startMenu.style.display = startMenu.style.display === 'block' ? 'none' : 'block';
     }
 
-    // 設定アプリを開く関数
-    function openSettings() {
-      alert('設定アプリを開きます。');
-    }
-
-    // カメラアプリを開く関数
-    function openCamera() {
-      createWindow('カメラ', cameraContent());
-    }
-
-    // フォトアプリを開く関数
-    function openPhotos() {
-      createWindow('フォト', photosContent());
-    }
-   
     // ペイントアプリを開く関数
     function openPaintApp() {
       createWindow('ペイント', paintAppContent());
       setupColorPicker();
     }
+
+    // 時計アプリを開く関数
+    function openClockApp() {
+      createWindow('時計', clockAppContent());
+      startClock();
+    }
+
+    // タイマーアプリを開く関数
+    function openTimerApp() {
+      createWindow('タイマー', timerAppContent());
+    }
+
+    // セットアップアプリを開く関数
+    function openSetupApp() {
+      createWindow('セットアップ', setupAppContent());
+    }
   </script>
-  <script src="https://unpkg.com/browserfs"></script>
-  <script src="system.js"></script>
-  <script src="app.js"></script>
 </body>
 </html>
