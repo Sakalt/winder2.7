@@ -1,9 +1,68 @@
-// 電卓ウィンドウを開く関数
+// ウィンドウを作成する関数
+function createWindow(title, content) {
+  const newWindow = document.createElement('div');
+  newWindow.className = 'window';
+  newWindow.innerHTML = `
+    <div class="title-bar">
+      ${title}
+      <div>
+        <button onclick="minimizeWindow(this)">−</button>
+        <button onclick="maximizeWindow(this)">□</button>
+        <button onclick="closeWindow(this)">×</button>
+      </div>
+    </div>
+    <div class="content">${content}</div>
+  `;
+  document.getElementById('desktop').appendChild(newWindow);
+  makeDraggable(newWindow);
+}
+
+// ウィンドウをドラッグ可能にする関数
+function makeDraggable(element) {
+  let isMouseDown = false;
+  let offsetX, offsetY;
+
+  element.querySelector('.title-bar').addEventListener('mousedown', function(e) {
+    isMouseDown = true;
+    offsetX = e.clientX - element.offsetLeft;
+    offsetY = e.clientY - element.offsetTop;
+  });
+
+  document.addEventListener('mousemove', function(e) {
+    if (isMouseDown) {
+      element.style.left = `${e.clientX - offsetX}px`;
+      element.style.top = `${e.clientY - offsetY}px`;
+    }
+  });
+
+  document.addEventListener('mouseup', function() {
+    isMouseDown = false;
+  });
+}
+
+// ウィンドウを閉じる関数
+function closeWindow(button) {
+  button.closest('.window').remove();
+}
+
+// ウィンドウを最小化する関数
+function minimizeWindow(button) {
+  const window = button.closest('.window');
+  window.style.display = 'none';
+}
+
+// ウィンドウを最大化する関数
+function maximizeWindow(button) {
+  const window = button.closest('.window');
+  window.style.width = '100%';
+  window.style.height = '100%';
+}
+
+// 電卓を開く関数
 function openCalculator() {
   createWindow('電卓', calculatorContent());
 }
 
-// 電卓のコンテンツを設定する関数
 function calculatorContent() {
   return `
     <input type="text" id="calc-display" disabled>
@@ -41,7 +100,7 @@ function inputCalc(value) {
   }
 }
 
-// タスクマネージャーウィンドウを開く関数
+// タスクマネージャーを開く関数
 function openTaskManager() {
   createWindow('タスクマネージャー', taskManagerContent());
 }
@@ -50,9 +109,9 @@ function taskManagerContent() {
   return '<div id="task-list">タスク一覧をここに表示</div>';
 }
 
-// ブラウザウィンドウを開く関数
+// ブラウザを開く関数
 function openBrowser() {
-  createWindow('windbrowser', browserContent());
+  createWindow('ブラウザ', browserContent());
 }
 
 function browserContent() {
@@ -67,7 +126,8 @@ function loadUrl() {
   const url = document.getElementById('browser-url').value;
   document.getElementById('browser-frame').src = url;
 }
-// 設定ウィンドウを開く関数
+
+// 設定を開く関数
 function openSettings() {
   createWindow('設定', settingsContent());
 }
@@ -78,36 +138,12 @@ function settingsContent() {
     <p>ここに設定内容を記述します。</p>
   `;
 }
-// 電卓を開く関数
-function openCalculator() {
-  createWindow('電卓', calculatorContent());
+
+// 天気アプリを開く関数
+function openWeatherApp() {
+  createWindow('天気アプリ', weatherAppContent());
 }
 
-// ブラウザを開く関数
-function openBrowser() {
-  createWindow('ブラウザ', browserContent());
-}
-
-// ウィンドウを作成する関数
-function createWindow(title, content) {
-  const newWindow = document.createElement('div');
-  newWindow.className = 'window';
-  newWindow.innerHTML = `
-    <div class="title-bar">
-      ${title}
-      <div>
-        <button onclick="minimizeWindow(this)">−</button>
-        <button onclick="maximizeWindow(this)">□</button>
-        <button onclick="closeWindow(this)">×</button>
-      </div>
-    </div>
-    <div class="content">${content}</div>
-  `;
-  document.getElementById('desktop').appendChild(newWindow);
-  makeDraggable(newWindow);
-}
-
-// 天気アプリのコンテンツを設定する関数
 function weatherAppContent() {
   return `
     <div>
@@ -146,46 +182,11 @@ async function getWeather() {
   }
 }
 
-// ウィンドウをドラッグ可能にする関数
-function makeDraggable(element) {
-  let isMouseDown = false;
-  let offsetX, offsetY;
-
-  element.querySelector('.title-bar').addEventListener('mousedown', function(e) {
-    isMouseDown = true;
-    offsetX = e.clientX - element.offsetLeft;
-    offsetY = e.clientY - element.offsetTop;
-  });
-
-  document.addEventListener('mousemove', function(e) {
-    if (isMouseDown) {
-      element.style.left = `${e.clientX - offsetX}px`;
-      element.style.top = `${e.clientY - offsetY}px`;
-    }
-  });
-
-  document.addEventListener('mouseup', function() {
-    isMouseDown = false;
-  });
+// ペイントアプリを開く関数
+function openPaintApp() {
+  createWindow('ペイントアプリ', paintAppContent());
 }
 
-function closeWindow(button) {
-  button.parentElement.parentElement.parentElement.remove();
-}
-
-function minimizeWindow(button) {
-  const window = button.parentElement.parentElement.parentElement;
-  window.style.display = 'none';
-}
-
-function maximizeWindow(button) {
-  const window = button.parentElement.parentElement.parentElement;
-  window.style.width = '100%';
-  window.style.height = '100%';
-}
-
-
-// ペイントアプリのコンテンツを設定する関数
 function paintAppContent() {
   return `
     <canvas id="paint-canvas" width="800" height="600"></canvas>
@@ -195,40 +196,6 @@ function paintAppContent() {
       <button onclick="exportCanvas()">エクスポート</button>
     </div>
   `;
-}
-
-// 時計アプリのコンテンツを設定する関数
-function clockAppContent() {
-  return `<div id="clock"></div>`;
-}
-
-// タイマーアプリのコンテンツを設定する関数
-function timerAppContent() {
-  return `
-    <div>
-      <input type="number" id="timer-minutes" placeholder="分" min="0">
-      <input type="number" id="timer-seconds" placeholder="秒" min="0">
-      <button onclick="startTimer()">スタート</button>
-      <button onclick="resetTimer()">リセット</button>
-    </div>
-    <div id="timer-display">00:00</div>
-  `;
-}
-
-// 天気アプリのコンテンツを設定する関数
-function weatherAppContent() {
-  return `
-    <div>
-      <input type="text" id="city-name" placeholder="都市名を入力">
-      <button onclick="getWeather()">天気を取得</button>
-    </div>
-    <div id="weather-result"></div>
-  `;
-}
-
-// セットアップアプリのコンテンツを設定する関数
-function setupAppContent() {
-  return `<div>セットアップ機能はここに表示されます。</div>`;
 }
 
 // キャンバスを取得
@@ -283,12 +250,14 @@ function exportCanvas() {
   link.click();
 }
 
-// 色選択UIの設定
-function setupColorPicker() {
-  const colorPicker = document.getElementById('color-picker');
-  colorPicker.addEventListener('input', function() {
-    currentColor = colorPicker.value;
-  });
+// 時計アプリを開く関数
+function openClockApp() {
+  createWindow('時計アプリ', clockAppContent());
+  startClock();
+}
+
+function clockAppContent() {
+  return `<div id="clock"></div>`;
 }
 
 // 時計の表示を開始する関数
@@ -298,6 +267,23 @@ function startClock() {
     const now = new Date();
     clock.innerText = now.toLocaleTimeString();
   }, 1000);
+}
+
+// タイマーアプリを開く関数
+function openTimerApp() {
+  createWindow('タイマーアプリ', timerAppContent());
+}
+
+function timerAppContent() {
+  return `
+    <div>
+      <input type="number" id="timer-minutes" placeholder="分" min="0">
+      <input type="number" id="timer-seconds" placeholder="秒" min="0">
+      <button onclick="startTimer()">スタート</button>
+      <button onclick="resetTimer()">リセット</button>
+    </div>
+    <div id="timer-display">00:00</div>
+  `;
 }
 
 // タイマーの開始関数
@@ -325,4 +311,13 @@ function resetTimer() {
   document.getElementById('timer-display').innerText = '00:00';
   document.getElementById('timer-minutes').value = '';
   document.getElementById('timer-seconds').value = '';
+}
+
+// セットアップアプリを開く関数
+function openSetupApp() {
+  createWindow('セットアップアプリ', setupAppContent());
+}
+
+function setupAppContent() {
+  return `<div>セットアップ機能はここに表示されます。</div>`;
 }
