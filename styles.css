@@ -124,3 +124,19 @@ body {
 .close-button {
     background-color: #dd0000;
 }
+/* styles.css */
+.clock {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 20px auto;
+    width: 200px;
+}
+
+.app-container {
+    display: none;
+}
