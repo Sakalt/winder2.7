@@ -61,3 +61,26 @@ body {
   flex-grow: 1;
   padding: 10px;
 }
+window-button {
+  background-color: #aaaaaa; /* ボタンの背景色 */
+  color: white; /* ボタンのテキスト色 */
+  border: none; /* ボーダーをなくす */
+  padding: 5px 10px; /* パディング */
+  cursor: pointer; /* カーソルをポインターに変更 */
+}
+
+.window-button:hover {
+  background-color: #555; /* マウスオーバー時の背景色 */
+}
+
+.minimize-button {
+  background-color: #00dd00; /* 最小化ボタンの背景色 */
+}
+
+.maximize-button {
+  background-color: #dddd00; /* 最大化ボタンの背景色 */
+}
+
+.close-button {
+  background-color: #dd0000; /* 閉じるボタンの背景色 */
+}
