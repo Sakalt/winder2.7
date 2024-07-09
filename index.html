@@ -1,36 +1,36 @@
+<!-- index.html -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WindOS</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wind Browser OS</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="desktop">
-    <!-- ここにウィンドウが追加されます -->
-  </div>
- <!-- Start Menu -->
-<div id="start-menu">
-    <div class="start-menu-header">
+    <!-- Start Button and Menu -->
+    <div id="start-menu">
         <button id="start-button" onclick="toggleStartMenu()">スタート</button>
-        <button id="close-button" onclick="closeStartMenu()">×</button>
+        <div id="start-menu-items" class="hidden">
+            <button onclick="openBrowser()">ブラウザ</button>
+            <button onclick="openCalculator()">電卓</button>
+            <button onclick="openWeatherApp()">天気アプリ</button>
+            <button onclick="openTimerApp()">タイマーアプリ</button>
+            <button onclick="openPaintApp()">ペイントアプリ</button>
+            <button onclick="openClockApp()">時計アプリ</button>
+            <button onclick="openTaskManager()">タスクマネージャー</button>
+            <button onclick="openSettings()">設定</button>
+            <button onclick="openPhotos()">写真</button>
+            <button onclick="openFileExplorer()">ファイルエクスプローラー</button>
+        </div>
     </div>
-    <div id="start-menu-items">
-        <!-- Start Menu Items -->
-        <button onclick="openBrowser()">ブラウザ</button>
-        <button onclick="openCalculator()">電卓</button>
-        <button onclick="openWeatherApp()">天気アプリ</button>
-        <button onclick="openTimerApp()">タイマーアプリ</button>
-        <button onclick="openPaintApp()">ペイントアプリ</button>
-        <button onclick="openClockApp()">時計アプリ</button>
-        <button onclick="openTaskManager()">タスクマネージャー</button>
-        <button onclick="openSettings()">設定</button>
-        <button onclick="openPhotos()">写真</button>
-    </div>
-</div>
-  </div>
-  <script src="system.js"></script>
-  <script src="app.js"></script>
+
+    <!-- Desktop Area -->
+    <div id="desktop"></div>
+
+    <!-- Scripts -->
+    <script src="system.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
