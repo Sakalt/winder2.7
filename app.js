@@ -9,6 +9,9 @@ function createWindow(title, content) {
         <button onclick="minimizeWindow(this)">−</button>
         <button onclick="maximizeWindow(this)">□</button>
         <button onclick="closeWindow(this)">×</button>
+        <button class="window-button minimize-button" onclick="minimizeWindow(this)">−</button>
+　　　　 <button class="window-button maximize-button" onclick="maximizeWindow(this)">□</button>
+　　　　 <button class="window-button close-button" onclick="closeWindow(this)">×</button>
       </div>
     </div>
     <div class="content">${content}</div>
