@@ -42,6 +42,7 @@
     <button onclick="openClockApp()">時計</button>
     <button onclick="openTimerApp()">タイマー</button>
     <button onclick="openSetupApp()">セットアップ</button>
+    <button onclick="openWeatherApp()">天気</button>
     <!-- 他のアプリケーションのボタンを追加 -->
   </div>
 
@@ -74,6 +75,12 @@
     // セットアップアプリを開く関数
     function openSetupApp() {
       createWindow('セットアップ', setupAppContent());
+    }
+
+    // 天気アプリを開く関数
+    function openWeatherApp() {
+      createWindow('天気', weatherAppContent());
+      getWeather();
     }
   </script>
 </body>
