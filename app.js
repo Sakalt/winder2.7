@@ -293,3 +293,11 @@ function getWeatherData() {
             console.error('天気情報の取得に失敗しました。', error);
         });
 }
+function startMenu() {
+    const startMenuElement = document.getElementById('start-menu');
+    if (startMenuElement.style.display === 'block') {
+        startMenuElement.style.display = 'none';
+    } else {
+        startMenuElement.style.display = 'block';
+    }
+}
