@@ -8,24 +8,25 @@
 </head>
 <body>
     <!-- スタートメニューのボタン -->
-<button onclick="startMenu()">Start</button>
+    <button onclick="startMenu()">Start</button>
 
-<!-- スタートメニュー本体 -->
-<div id="start-menu" style="display: none;">
-    <ul>
-        　<button onclick="openBrowser()">ブラウザ</button>
-        　<button onclick="openCalculator()">電卓</button>
-          <button onclick="openWeatherApp()">天気アプリ</button>
-          <button onclick="openTimerApp()">notepadアプリ</button>
-          <button onclick="PaintApp()">ペイントアプリ</button>
-          <button onclick="openClockApp()">時計アプリ</button>
-          <button onclick="openTaskManager()">タスクマネージャー</button>
-          <button onclick="openSettings()">設定</button>
-          <button onclick="openCamera()">camera</button>
-          <button onclick="openFileExplorer()">ファイルエクスプローラー</button>
-        <!-- 他のアプリケーションをここに追加 -->
-    </ul>
-</div>
+    <!-- スタートメニュー本体 -->
+    <div id="start-menu" style="display: none;">
+        <ul>
+            <li><button onclick="openBrowser()">ブラウザ</button></li>
+            <li><button onclick="openCalculator()">電卓</button></li>
+            <li><button onclick="openWeatherApp()">天気アプリ</button></li>
+            <li><button onclick="openNotepadApp()">notepadアプリ</button></li>
+            <li><button onclick="openPaintApp()">ペイントアプリ</button></li>
+            <li><button onclick="openClockApp()">時計アプリ</button></li>
+            <li><button onclick="openTaskManager()">タスクマネージャー</button></li>
+            <li><button onclick="openSettings()">設定</button></li>
+            <li><button onclick="openCamera()">カメラ</button></li>
+            <li><button onclick="openFileExplorer()">ファイルエクスプローラー</button></li>
+            <!-- 他のアプリケーションをここに追加 -->
+        </ul>
+    </div>
+
     <script src="app.js"></script>
 </body>
 </html>
