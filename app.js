@@ -26,6 +26,10 @@ function makeDraggable(element) {
     isMouseDown = true;
     offsetX = e.clientX - element.offsetLeft;
     offsetY = e.clientY - element.offsetTop;
+
+    // ドラッグ中に他の要素がマウス操作を奪わないようにするために、イベントをキャプチャリングモードで処理します。
+    e.stopPropagation();
+    e.preventDefault();
   });
 
   document.addEventListener('mousemove', function(e) {
