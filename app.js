@@ -1,3 +1,43 @@
+document.addEventListener('DOMContentLoaded', function() {
+  // キャンバス要素とコンテキストを取得
+  const canvas = document.getElementById('paint-canvas');
+  const ctx = canvas.getContext('2d');
+  let isPainting = false;
+  let currentColor = '#000000'; // 初期色
+
+  // キャンバスにマウスイベントを設定
+  canvas.addEventListener('mousedown', startPaint);
+  canvas.addEventListener('mousemove', draw);
+  canvas.addEventListener('mouseup', endPaint);
+  canvas.addEventListener('mouseleave', endPaint);
+
+  // 描画を開始する関数
+  function startPaint(e) {
+    isPainting = true;
+    draw(e);
+  }
+
+  // 描画する関数
+  function draw(e) {
+    if (!isPainting) return;
+
+    ctx.lineWidth = 5;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = currentColor;
+
+    ctx.lineTo(e.offsetX, e.offsetY);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(e.offsetX, e.offsetY);
+  }
+
+  // 描画を終了する関数
+  function endPaint() {
+    isPainting = false;
+    ctx.beginPath();
+  }
+});
+
 // ウィンドウを作成する関数
 function createWindow(title, content) {
   const newWindow = document.createElement('div');
@@ -10,8 +50,8 @@ function createWindow(title, content) {
         <button onclick="maximizeWindow(this)">□</button>
         <button onclick="closeWindow(this)">×</button>
         <button class="window-button minimize-button" onclick="minimizeWindow(this)">−</button>
-　　　　 <button class="window-button maximize-button" onclick="maximizeWindow(this)">□</button>
-　　　　 <button class="window-button close-button" onclick="closeWindow(this)">×</button>
+        <button class="window-button maximize-button" onclick="maximizeWindow(this)">□</button>
+        <button class="window-button close-button" onclick="closeWindow(this)">×</button>
       </div>
     </div>
     <div class="content">${content}</div>
@@ -204,72 +244,10 @@ function paintAppContent() {
   `;
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-  const canvas = document.getElementById('paint-canvas');
-  const ctx = canvas.getContext('2d');
-  let isPainting = false;
-  let currentColor = '#000000'; // 初期色
-
-  // キャンバスを取得
-  canvas.addEventListener('mousedown', startPaint);
-  canvas.addEventListener('mousemove', draw);
-  canvas.addEventListener('mouseup', endPaint);
-  canvas.addEventListener('mouseleave', endPaint);
-
-  // 描画を開始する関数
-  function startPaint(e) {
-    isPainting = true;
-    draw(e);
-  }
-
-  // 描画する関数
-  function draw(e) {
-    if (!isPainting) return;
-
-    ctx.lineWidth = 5;
-    ctx.lineCap = 'round';
-    ctx.strokeStyle = currentColor;
-
-    ctx.lineTo(e.offsetX, e.offsetY);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(e.offsetX, e.offsetY);
-  }
-
-  // 描画を終了する関数
-  function endPaint() {
-    isPainting = false;
-    ctx.beginPath();
-  }
-});
-
-// その他の関数はそのまま残します
-
-// 描画を開始する関数
-function startPaint(e) {
-  isPainting = true;
-  draw(e);
-}
-
-// 描画する関数
-function draw(e) {
-  if (!isPainting) return;
-
-  ctx.lineWidth = 5;
-  ctx.lineCap = 'round';
-  ctx.strokeStyle = currentColor;
-
-  ctx.lineTo(e.offsetX, e.offsetY);
-  ctx.stroke();
-  ctx.beginPath();
-  ctx.moveTo(e.offsetX, e.offsetY);
-}
-
-// 描画を終了する関数
-function endPaint() {
-  isPainting = false;
-  ctx.beginPath();
-}
+// キャンバスを取得
+const canvas = document.getElementById('paint-canvas');
+const ctx = canvas.getContext('2d');
+let currentColor = '#000000'; // 初期色
 
 // キャンバスをクリアする関数
 function clearCanvas() {
@@ -278,81 +256,26 @@ function clearCanvas() {
 
 // キャンバスをエクスポートする関数
 function exportCanvas() {
-  const dataUrl = canvas.toDataURL('image/png');
-  const link = document.createElement('a');
-  link.href = dataUrl;
-  link.download = 'painting.png';
-  link.click();
+  const image = canvas.toDataURL('image/png');
+  const newWindow = window.open(image);
 }
 
-// 時計アプリを開く関数
-function openClockApp() {
-  createWindow('時計アプリ', clockAppContent());
-  startClock();
+// 日本語でアラートを表示する関数
+function showAlert(message) {
+  alert(message);
 }
 
-function clockAppContent() {
-  return `<div id="clock"></div>`;
-}
+// 初期設定
+document.getElementById('desktop').innerHTML = `
+  <button onclick="openCalculator()">電卓</button>
+  <button onclick="openTaskManager()">タスクマネージャー</button>
+  <button onclick="openBrowser()">ブラウザ</button>
+  <button onclick="openSettings()">設定</button>
+  <button onclick="openWeatherApp()">天気アプリ</button>
+  <button onclick="openPaintApp()">ペイントアプリ</button>
+`;
 
-// 時計の表示を開始する関数
-function startClock() {
-  const clock = document.getElementById('clock');
-  setInterval(() => {
-    const now = new Date();
-    clock.innerText = now.toLocaleTimeString();
-  }, 1000);
-}
+// ウィンドウを作成する関数を使用する場合の例
+// createWindow('電卓', calculatorContent()); // 例えば、電卓を開く場合
 
-// タイマーアプリを開く関数
-function openTimerApp() {
-  createWindow('タイマーアプリ', timerAppContent());
-}
-
-function timerAppContent() {
-  return `
-    <div>
-      <input type="number" id="timer-minutes" placeholder="分" min="0">
-      <input type="number" id="timer-seconds" placeholder="秒" min="0">
-      <button onclick="startTimer()">スタート</button>
-      <button onclick="resetTimer()">リセット</button>
-    </div>
-    <div id="timer-display">00:00</div>
-  `;
-}
-
-// タイマーの開始関数
-function startTimer() {
-  const minutes = parseInt(document.getElementById('timer-minutes').value) || 0;
-  const seconds = parseInt(document.getElementById('timer-seconds').value) || 0;
-  let totalTime = minutes * 60 + seconds;
-  const timerDisplay = document.getElementById('timer-display');
-
-  const interval = setInterval(() => {
-    const min = Math.floor(totalTime / 60);
-    const sec = totalTime % 60;
-    timerDisplay.innerText = `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
-    totalTime--;
-
-    if (totalTime < 0) {
-      clearInterval(interval);
-      timerDisplay.innerText = '00:00';
-    }
-  }, 1000);
-}
-
-// タイマーのリセット関数
-function resetTimer() {
-  document.getElementById('timer-display').innerText = '00:00';
-  document.getElementById('timer-minutes').value = '';
-  document.getElementById('timer-seconds').value = '';
-}
-
-// セットアップアプリを開く関数
-function openSetupApp() {
-  createWindow('セットアップアプリ', setupAppContent());
-}
-
-function setupAppContent() {
-  return `<div>セットアップ機能はここに表示されます。</div>`;
-}
+// その他の関数はそのまま残します
