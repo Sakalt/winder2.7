@@ -273,3 +273,122 @@ document.getElementById('desktop').addEventListener('click', function(e) {
     }
   }
 });
+// ペイントアプリのコンテンツを設定する関数
+function paintAppContent() {
+  return `
+    <canvas id="paint-canvas" width="800" height="600"></canvas>
+    <div>
+      <input type="color" id="color-picker" value="#000000">
+      <button onclick="clearCanvas()">クリア</button>
+      <button onclick="exportCanvas()">エクスポート</button>
+    </div>
+  `;
+}
+
+// キャンバスを取得
+const canvas = document.getElementById('paint-canvas');
+const ctx = canvas.getContext('2d');
+let isPainting = false;
+let currentColor = '#000000'; // 初期色
+
+// マウスイベントの設定
+canvas.addEventListener('mousedown', startPaint);
+canvas.addEventListener('mousemove', draw);
+canvas.addEventListener('mouseup', endPaint);
+canvas.addEventListener('mouseleave', endPaint);
+
+// 描画を開始する関数
+function startPaint(e) {
+  isPainting = true;
+  draw(e);
+}
+
+// 描画する関数
+function draw(e) {
+  if (!isPainting) return;
+
+  ctx.lineWidth = 5;
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = currentColor;
+
+  ctx.lineTo(e.offsetX, e.offsetY);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(e.offsetX, e.offsetY);
+}
+
+// 描画を終了する関数
+function endPaint() {
+  isPainting = false;
+  ctx.beginPath();
+}
+
+// キャンバスをクリアする関数
+function clearCanvas() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+// キャンバスをエクスポートする関数
+function exportCanvas() {
+  const dataUrl = canvas.toDataURL('image/png');
+  const link = document.createElement('a');
+  link.href = dataUrl;
+  link.download = 'painting.png';
+  link.click();
+}
+
+// 色選択UIの設定
+function setupColorPicker() {
+  const colorPicker = document.getElementById('color-picker');
+  colorPicker.addEventListener('input', function() {
+    currentColor = colorPicker.value;
+  });
+}
+
+// ウィンドウを作成したらペイントアプリを開始する
+document.getElementById('desktop').addEventListener('click', function(e) {
+  if (e.target.closest('.window .title-bar button') && e.target.innerText === '×') {
+    const windowTitle = e.target.closest('.window').querySelector('.title-bar').innerText.trim();
+    if (windowTitle === 'ペイント') {
+      // ここでペイントアプリの初期化やリセットなどの処理を行うことができます
+    }
+  }
+});
+
+// ウィンドウをドラッグ可能にする関数
+function makeDraggable(element) {
+  let isMouseDown = false;
+  let offsetX, offsetY;
+
+  element.querySelector('.title-bar').addEventListener('mousedown', function(e) {
+    isMouseDown = true;
+    offsetX = e.clientX - element.offsetLeft;
+    offsetY = e.clientY - element.offsetTop;
+  });
+
+  document.addEventListener('mousemove', function(e) {
+    if (isMouseDown) {
+      element.style.left = `${e.clientX - offsetX}px`;
+      element.style.top = `${e.clientY - offsetY}px`;
+    }
+  });
+
+  document.addEventListener('mouseup', function() {
+    isMouseDown = false;
+  });
+}
+
+function closeWindow(button) {
+  button.parentElement.parentElement.parentElement.remove();
+}
+
+function minimizeWindow(button) {
+  const window = button.parentElement.parentElement.parentElement;
+  window.style.display = 'none';
+}
+
+function maximizeWindow(button) {
+  const window = button.parentElement.parentElement.parentElement;
+  window.style.width = '100%';
+  window.style.height = '100%';
+}
