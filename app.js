@@ -137,6 +137,17 @@ function timerAppContent() {
   `;
 }
 
+// 天気アプリのコンテンツを設定する関数
+function weatherAppContent() {
+  return `
+    <div>
+      <input type="text" id="city-name" placeholder="都市名を入力">
+      <button onclick="getWeather()">天気を取得</button>
+    </div>
+    <div id="weather-result"></div>
+  `;
+}
+
 // セットアップアプリのコンテンツを設定する関数
 function setupAppContent() {
   return `<div>セットアップ機能はここに表示されます。</div>`;
@@ -238,7 +249,31 @@ function resetTimer() {
   document.getElementById('timer-seconds').value = '';
 }
 
-// ウィンドウをドラッグ可能にする関数
+// 天気情報を取得する関数
+async function getWeather() {
+  const cityName = document.getElementById('city-name').value;
+  const apiKey = 'YOUR_OPENWEATHERMAP_API_KEY';
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric&lang=ja`;
+
+  const response = await fetch(url);
+  const data = await response.json();
+
+  if (data.cod === 200) {
+    const weatherResult = document.getElementById('weather-result');
+    weatherResult.innerHTML = `
+      <h3>${data.name}</h3>
+      <p>${data.weather[0].description}</p>
+      <p>温度: ${data.main.temp}℃</p>
+      <p>湿度: ${data.main.humidity}%</p>
+      <p>風速: ${data.wind.speed}m/s</p>
+    `;
+  } else {
+    document.getElementById('weather-result').innerText = '天気情報を取得できませんでした。';
+  }
+}
+
+// ウィンドウをドラッグ可能
+
 function makeDraggable(element) {
   let isMouseDown = false;
   let offsetX, offsetY;
