@@ -63,6 +63,12 @@
     function openPhotos() {
       createWindow('フォト', photosContent());
     }
+   
+    // ペイントアプリを開く関数
+    function openPaintApp() {
+      createWindow('ペイント', paintAppContent());
+      setupColorPicker();
+    }
   </script>
   <script src="https://unpkg.com/browserfs"></script>
   <script src="system.js"></script>
