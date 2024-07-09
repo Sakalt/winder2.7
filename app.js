@@ -388,3 +388,12 @@ function closeStartMenu() {
 
 // 起動時にスタートメニューを生成
 generateStartMenu();
+// スタートメニューをトグルする関数
+function toggleStartMenu() {
+  const startMenu = document.getElementById('start-menu');
+  if (startMenu.style.display === 'block') {
+    startMenu.style.display = 'none';
+  } else {
+    startMenu.style.display = 'block';
+  }
+}
