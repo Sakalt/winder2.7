@@ -1,101 +1,12 @@
 /* スタイルの設定 */
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  overflow: hidden;
-  background-image: url('壁紙.png');
-  background-size: cover;
-  background-position: center;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    overflow: hidden;
+    background-image: url('壁紙.png');
+    background-size: cover;
+    background-position: center;
 }
-#taskbar {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 40px;
-  background-color: #333;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding: 0 10px;
-}
-#start-button {
-  background-color: #444;
-  color: white;
-  border: none;
-  padding: 10px;
-  cursor: pointer;
-}
-#start-menu {
-  display: none;
-  position: absolute;
-  bottom: 40px;
-  left: 10px;
-  background-color: white;
-  border: 1px solid #ccc;
-  width: 200px;
-}
-.window {
-  border: 1px solid #ccc;
-  width: 400px;
-  height: auto;
-  position: absolute;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-}
-.title-bar {
-  background: #ddd;
-  padding: 5px;
-  cursor: move;
-  display: flex;
-  justify-content: space-between;
-}
-.title-bar button {
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-.content {
-  flex-grow: 1;
-  padding: 10px;
-}
-window-button {
-  background-color: #aaaaaa; /* ボタンの背景色 */
-  color: white; /* ボタンのテキスト色 */
-  border: none; /* ボーダーをなくす */
-  padding: 5px 10px; /* パディング */
-  cursor: pointer; /* カーソルをポインターに変更 */
-}
-
-.window-button:hover {
-  background-color: #555; /* マウスオーバー時の背景色 */
-}
-
-.minimize-button {
-  background-color: #00dd00; /* 最小化ボタンの背景色 */
-}
-
-.maximize-button {
-  background-color: #dddd00; /* 最大化ボタンの背景色 */
-}
-
-.close-button {
-  background-color: #dd0000; /* 閉じるボタンの背景色 */
-}
-/* styles.css */
-
-/* スタートボタンのスタイル */
-#start-button {
-    padding: 8px 16px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-/* スタートメニュー全体のスタイル */
 #start-menu {
     position: fixed;
     bottom: 0;
@@ -105,7 +16,14 @@ window-button {
     border-top-right-radius: 8px;
 }
 
-/* スタートメニュー内アイテムのスタイル */
+#start-button {
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
 #start-menu-items {
     display: none;
     position: absolute;
@@ -117,7 +35,6 @@ window-button {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-/* スタートメニューアイテムのボタンスタイル */
 #start-menu-items button {
     display: block;
     width: 100%;
@@ -129,12 +46,81 @@ window-button {
     cursor: pointer;
 }
 
-/* スタートメニューアイテムのボタンにホバースタイルを適用 */
 #start-menu-items button:hover {
     background-color: #555;
 }
 
-/* スタートメニューが表示されたときのスタイル */
-#start-menu-items.visible {
-    display: block;
+#taskbar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background-color: #333;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 10px;
+}
+
+#start-button {
+    background-color: #444;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.window {
+    border: 1px solid #ccc;
+    width: 400px;
+    height: auto;
+    position: absolute;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.title-bar {
+    background: #ddd;
+    padding: 5px;
+    cursor: move;
+    display: flex;
+    justify-content: space-between;
+}
+
+.title-bar button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.content {
+    flex-grow: 1;
+    padding: 10px;
+}
+
+.window-button {
+    background-color: #aaaaaa;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.window-button:hover {
+    background-color: #555;
+}
+
+.minimize-button {
+    background-color: #00dd00;
+}
+
+.maximize-button {
+    background-color: #dddd00;
+}
+
+.close-button {
+    background-color: #dd0000;
 }
